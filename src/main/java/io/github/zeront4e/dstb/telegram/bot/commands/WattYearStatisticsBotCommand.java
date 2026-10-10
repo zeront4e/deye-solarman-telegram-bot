@@ -55,7 +55,7 @@ public class WattYearStatisticsBotCommand implements BotCommand {
 
         //Only generate chart, if data is available.
         if(imageBytes == null) {
-            SendMessage sendMessage = new SendMessage(update.message().chat().id(), "I'm sorry, but I don't " +
+            SendMessage sendMessage = new SendMessage((long) update.message().chat().id(), "I'm sorry, but I don't " +
                     "have any data for this year. " + Constants.Emojis.SAD + " Please try again later.");
 
             telegramBot.execute(sendMessage);
@@ -65,7 +65,7 @@ public class WattYearStatisticsBotCommand implements BotCommand {
 
         //Send generated chart.
 
-        SendPhoto sendPhoto = new SendPhoto(update.message().chat().id(), imageBytes);
+        SendPhoto sendPhoto = new SendPhoto((long) update.message().chat().id(), imageBytes);
 
         sendPhoto.caption("Here is the kWh consumption data per month for this year. " + Constants.Emojis.STATISTICS);
 

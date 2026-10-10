@@ -31,7 +31,7 @@ public class StartBotCommand implements BotCommand {
 
     @Override
     public void onCommandRead(List<String> commandArguments, Update update, TelegramBot telegramBot) {
-        telegramBot.execute(new SendMessage(update.message().chat().id(), "Hello " +
+        telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Hello " +
                 update.message().from().firstName() + "! " + Constants.Emojis.WAVING_HAND +
                 " Please type or select a predefined command. " + Constants.Emojis.SMILE));
     }

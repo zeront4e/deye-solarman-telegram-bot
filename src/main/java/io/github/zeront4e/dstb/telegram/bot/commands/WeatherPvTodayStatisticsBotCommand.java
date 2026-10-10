@@ -67,7 +67,7 @@ public class WeatherPvTodayStatisticsBotCommand implements BotCommand {
 
         //Only generate chart, if data is available.
         if(pvImageBytes == null) {
-            SendMessage sendMessage = new SendMessage(update.message().chat().id(), "I'm sorry, but I don't " +
+            SendMessage sendMessage = new SendMessage((long) update.message().chat().id(), "I'm sorry, but I don't " +
                     "have any data for today. " + Constants.Emojis.SAD + " Please try again later.");
 
             telegramBot.execute(sendMessage);
@@ -77,7 +77,7 @@ public class WeatherPvTodayStatisticsBotCommand implements BotCommand {
 
         //Send generated chart.
 
-        SendPhoto sendPhoto = new SendPhoto(update.message().chat().id(), pvImageBytes);
+        SendPhoto sendPhoto = new SendPhoto((long) update.message().chat().id(), pvImageBytes);
 
         sendPhoto.caption("Here are the PV statistics for today. " + Constants.Emojis.STATISTICS);
 
@@ -91,13 +91,13 @@ public class WeatherPvTodayStatisticsBotCommand implements BotCommand {
             byte[] weatherImageBytes = OpenMeteoWeatherDataChartsUtil.generateWeatherChart(localDateTime,
                     weatherDataJsonObject);
 
-            sendPhoto = new SendPhoto(update.message().chat().id(), weatherImageBytes);
+            sendPhoto = new SendPhoto((long) update.message().chat().id(), weatherImageBytes);
 
             sendPhoto.caption("Here are the weather-statistics for today. " + Constants.Emojis.CLOUD_WITH_SUN);
 
             telegramBot.execute(sendPhoto);
 
-            SendMessage sendMessage = new SendMessage(update.message().chat().id(), "Current forecast:\n" +
+            SendMessage sendMessage = new SendMessage((long) update.message().chat().id(), "Current forecast:\n" +
                     createOpenMeteoWeatherStatisticsString(weatherDataJsonObject));
 
             telegramBot.execute(sendMessage);
@@ -105,7 +105,7 @@ public class WeatherPvTodayStatisticsBotCommand implements BotCommand {
         catch (Exception exception) {
             log.error("Unable to generate weather statistics.", exception);
 
-            SendMessage sendMessage = new SendMessage(update.message().chat().id(), "I'm sorry, but I'm unable " +
+            SendMessage sendMessage = new SendMessage((long) update.message().chat().id(), "I'm sorry, but I'm unable " +
                     "to send you the weather statistics. " + Constants.Emojis.SAD + " Cause: " +
                     exception.getMessage());
 

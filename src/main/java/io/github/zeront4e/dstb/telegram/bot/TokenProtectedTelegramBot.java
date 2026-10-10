@@ -95,14 +95,14 @@ public class TokenProtectedTelegramBot {
         String messageText = update.message().text();
 
         if(messageText == null) {
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "I received an empty " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I received an empty " +
                     "message-text... Please try again. " + Constants.Emojis.ILL));
 
             return;
         }
 
         if(!messageText.startsWith("/")) {
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "Please send me a command! " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Please send me a command! " +
                     "Otherwise I won't understand you. " + Constants.Emojis.SWEAT));
         }
         else {
@@ -133,7 +133,7 @@ public class TokenProtectedTelegramBot {
 
             //Ignore the access-token-command.
             if(command.equals(COMMAND_ACCESS_SET_TOKEN)) {
-                telegramBot.execute(new SendMessage(update.message().chat().id(), "You are already " +
+                telegramBot.execute(new SendMessage((long) update.message().chat().id(), "You are already " +
                         "authorized. No need to perform another authentication. " + Constants.Emojis.SMILE));
 
                 return;
@@ -142,7 +142,7 @@ public class TokenProtectedTelegramBot {
             BotCommand botCommand = commandBotCommandMap.get(command);
 
             if(botCommand == null) {
-                telegramBot.execute(new SendMessage(update.message().chat().id(), "I'm sorry, but I don't know " +
+                telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I'm sorry, but I don't know " +
                         "the given command. " + Constants.Emojis.THINKING + " Please send another one."));
             }
             else {
@@ -155,7 +155,7 @@ public class TokenProtectedTelegramBot {
                     log.error("Unable to execute bot-command \"{}\".", command);
                     log.error("Exception for error ID \"" + errorId + "\":", exception);
 
-                    telegramBot.execute(new SendMessage(update.message().chat().id(), "I was unable to " +
+                    telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I was unable to " +
                             "execute the command (error ID \"" + errorId + "\"). Please try again. " +
                             Constants.Emojis.ILL));
                 }
@@ -170,7 +170,7 @@ public class TokenProtectedTelegramBot {
             log.warn("Received message with unexpected chat type \"{}\". Only private chats are allowed!",
                     update.message().chat().type().name());
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "Hello! I only support private " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Hello! I only support private " +
                     "chats. Please contact me in a direct way. " + Constants.Emojis.SWEAT));
 
             return null;
@@ -183,7 +183,7 @@ public class TokenProtectedTelegramBot {
         if(chatUser.isBot()) {
             log.warn("Received message from bot. Only humans are allowed!");
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "Sorry. I only support chats " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Sorry. I only support chats " +
                     "with humans. " + Constants.Emojis.SAD));
 
             return null;
@@ -203,7 +203,7 @@ public class TokenProtectedTelegramBot {
         catch (Exception exception) {
             log.error("Unable to query data for existing Telegram users.", exception);
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "I was unable to " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I was unable to " +
                     "find out if I know you... Please try again. " + Constants.Emojis.ILL));
 
             return null;
@@ -234,14 +234,14 @@ public class TokenProtectedTelegramBot {
                 }
             }
             else {
-                telegramBot.execute(new SendMessage(update.message().chat().id(), "Your sent token is " +
+                telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Your sent token is " +
                         "invalid. Please try again. " + Constants.Emojis.SAD));
             }
         }
         else {
             //Received invalid command/message. Send welcome message.
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "It seems like we don't know " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "It seems like we don't know " +
                     "each other yet. Please send me your access-token (command \"/" + COMMAND_ACCESS_SET_TOKEN +
                     " YOUR_TOKEN\"). " + Constants.Emojis.SMILE));
         }
@@ -262,14 +262,14 @@ public class TokenProtectedTelegramBot {
             log.info("Created new Telegram user with user-ID \"{}\".",
                     newDbTelegramUser.getUserId());
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "Hello " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Hello " +
                     chatUser.firstName() + "! " + Constants.Emojis.WAVING_HAND + " Now you are " +
                     "authorized! " + Constants.Emojis.HUG));
         }
         catch (Exception exception) {
             log.error("Unable to create new Telegram user.", exception);
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "I was unable to " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I was unable to " +
                     "give you access... Please try again. " + Constants.Emojis.ILL));
         }
     }
@@ -285,14 +285,14 @@ public class TokenProtectedTelegramBot {
             log.info("Authorized existing Telegram user with user-ID \"{}\".",
                     existingDbTelegramUser.getUserId());
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "Welcome back " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "Welcome back " +
                     chatUser.firstName() + "! "  + Constants.Emojis.WAVING_HAND + " Now you are " +
                     "authorized! " + Constants.Emojis.HUG));
         }
         catch (Exception exception) {
             log.error("Unable to update existing Telegram user.", exception);
 
-            telegramBot.execute(new SendMessage(update.message().chat().id(), "I was unable to " +
+            telegramBot.execute(new SendMessage((long) update.message().chat().id(), "I was unable to " +
                     "give you access... Please try again. " + Constants.Emojis.ILL));
         }
     }

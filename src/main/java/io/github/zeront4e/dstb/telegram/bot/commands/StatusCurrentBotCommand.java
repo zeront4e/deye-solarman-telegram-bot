@@ -43,7 +43,7 @@ public class StatusCurrentBotCommand implements BotCommand {
         DeyeDataContainer readDataContainer = deyeDataContainer.get();
 
         if(readDataContainer == null) {
-            SendMessage sendMessage = new SendMessage(update.message().chat().id(), "I'm sorry, but I don't " +
+            SendMessage sendMessage = new SendMessage((long) update.message().chat().id(), "I'm sorry, but I don't " +
                     "have any data yet. " + Constants.Emojis.SAD + " Please try again later.");
 
             telegramBot.execute(sendMessage);
@@ -74,6 +74,6 @@ public class StatusCurrentBotCommand implements BotCommand {
         "\n" + Constants.Emojis.HOUSE + " House power kW: " +
                 StringFormatUtil.formatDouble(housePowerInKw);
 
-        telegramBot.execute(new SendMessage(update.message().chat().id(), responseStringBuilder));
+        telegramBot.execute(new SendMessage((long) update.message().chat().id(), responseStringBuilder));
     }
 }
